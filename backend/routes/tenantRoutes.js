@@ -1,9 +1,8 @@
 import express from 'express';
-import { UserRegistration ,UserLogin} from '../controller/UserController.js';
+import { createTenant } from '../controller/TenantController.js';
 
 const router = express.Router();
 
-router.post('/', UserRegistration);
-router.post('/user-login', UserLogin);
+router.post('/create', createTenant);
 
 export default router;

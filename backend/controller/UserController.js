@@ -1,4 +1,6 @@
-import { Login } from "../model/MasterTable.js";
+import { Login , Tenants } from "../model/MasterTable.js";
+import {getTenantConnection} from "../utils/TenantsDb.js";
+// import bcrypt from "bcrypt";
 
 export const UserRegistration = async (req, res) => {
   const {
@@ -39,27 +41,28 @@ export const UserRegistration = async (req, res) => {
 };
 
 export const UserLogin = async (req, res) => {
-  const { userName, email, password } = req.body;
-
-  if (!userName || !email || !password) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
-  try {
+  
+    try {
+    const { email, userName, password } = req.body;
     const user = await Login.findOne({ email, userName, password });
 
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-
-    return res.status(200).json({
-      message: "Login successful",
-      user,
+    const tenant = await Tenants.findOne({ tenantId: user.tenantId });
+    if (!tenant) {
+      return res.status(404).json({ message: 'Tenant not found' });
+    }
+    const tenantDb = await getTenantConnection(tenant.dbUrl, tenant.dbName);
+    
+console.log('Tenant DB models:', tenantDb.models);
+    res.status(200).json({
+      message: 'Login successful',
     });
   } catch (error) {
-    return res.status(500).json({
-      message: "Server error",
-      error: error.message,
-    });
+    console.error('Login error:', error);
+    res.status(500).json({ message: 'Internal server error' });
   }
 };
+
+
