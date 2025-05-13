@@ -11,6 +11,5 @@ router.use('/tenant', tenantRoutes);
 router.use('/user', UserRoutes);
 router.use('/restaurant', restaurantRoutes);
 router.use('/roles', rolesRoutes);
-router.use('/tenant', tenantRoutes);
 
 export default router;
