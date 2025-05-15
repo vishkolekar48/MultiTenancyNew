@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const tenantConnections = {};
-
+const dbConnectionObj = {}
 const getTenantConnection = async (url, tenantDbName) => {
   const tenantDbUrl = url;
   const dbName = tenantDbName;
@@ -32,8 +32,11 @@ const getTenantConnection = async (url, tenantDbName) => {
     // Now `conn.db` is defined
     const collections = await conn.db.listCollections().toArray();
     console.log(`Collections in ${dbName}:`, collections.map(c => c.name));
-
+    console.log(tenantConnections)  //--------------------------------------------
     tenantConnections[cacheKey] = conn;
+    dbConnectionObj['db'] = conn;
+     console.log(tenantConnections)  //--------------------------------------------
+
     return conn;
   } catch (error) {
     console.error(`Failed to connect to tenant DB: ${dbName}. Error: ${error.message}`);
@@ -41,4 +44,4 @@ const getTenantConnection = async (url, tenantDbName) => {
   }
 };
 
-export { getTenantConnection };
+export { getTenantConnection , tenantConnections,dbConnectionObj};

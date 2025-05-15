@@ -1,5 +1,5 @@
 import { Restaurants } from "../model/MasterTable.js";
-
+import { tenantConnections,dbConnectionObj } from "../utils/TenantsDb.js";
 export const createRestaurant = async (req, res) => {
   try {
     const {
@@ -43,30 +43,16 @@ export const createRestaurant = async (req, res) => {
   }
 };
 
-export const addStudent = async(req,res) =>{
+export const getAdmins = async(req,res) =>{
      
   try {
-     const {
-
-      
-
-     } = req.body
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
+     console.log('restraurent',tenantConnections);
+     console.log('restraurent',dbConnectionObj['db']);
+  
 
   } catch (error) {
+    return res.status(500).json({message:'Internal server error in getAdmins'})
     
   }
 
