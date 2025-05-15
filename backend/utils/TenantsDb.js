@@ -5,10 +5,10 @@ dotenv.config();
 
 const tenantConnections = {};
 
-const getTenantConnection = async (tenantDbName) => {
-  const tenantDbUrl = process.env.tenantDbUrl;
-  const dbName = tenantDbName || process.env.tenantDbName;
-  console.log("db name",dbName)
+const getTenantConnection = async (url, tenantDbName) => {
+  const tenantDbUrl = url;
+  const dbName = tenantDbName;
+
   if (!tenantDbUrl || !dbName) {
     throw new Error('Missing tenant DB URL or tenant DB name');
   }
@@ -21,16 +21,23 @@ const getTenantConnection = async (tenantDbName) => {
   }
 
   try {
-    const conn = await mongoose.createConnection(tenantDbUrl, {
-      dbName,
-    });
-    // console.log(conn)
-    tenantConnections[cacheKey] = conn;
+    const conn = mongoose.createConnection(tenantDbUrl, { dbName });
 
+    // Wait for connection to open before accessing `conn.db`
+    await new Promise((resolve, reject) => {
+      conn.once('open', resolve);
+      conn.once('error', reject);
+    });
+
+    // Now `conn.db` is defined
+    const collections = await conn.db.listCollections().toArray();
+    console.log(`Collections in ${dbName}:`, collections.map(c => c.name));
+
+    tenantConnections[cacheKey] = conn;
     return conn;
   } catch (error) {
-    console.error(`Failed to connect to tenant DB: ${dbName}. Error: ${error.message}`); // Error message
-    throw error; // Rethrow the error after logging
+    console.error(`Failed to connect to tenant DB: ${dbName}. Error: ${error.message}`);
+    throw error;
   }
 };
 

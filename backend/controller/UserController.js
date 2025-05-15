@@ -43,19 +43,20 @@ export const UserRegistration = async (req, res) => {
 export const UserLogin = async (req, res) => {
   
     try {
-    const { email, userName, password } = req.body;
-    const user = await Login.findOne({ email, userName, password });
+    const { userName, password } = req.body;
+    const user = await Login.findOne({userName, password });
 
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
     const tenant = await Tenants.findOne({ tenantId: user.tenantId });
+    console.log(tenant)
     if (!tenant) {
       return res.status(404).json({ message: 'Tenant not found' });
     }
+    
     const tenantDb = await getTenantConnection(tenant.dbUrl, tenant.dbName);
     
-console.log('Tenant DB models:', tenantDb.models);
     res.status(200).json({
       message: 'Login successful',
     });
