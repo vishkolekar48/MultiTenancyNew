@@ -5,10 +5,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const User = () => {
   const [formData, setFormData] = useState({
-    userName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    userName: 'surya',
+    email: 'surya@gmail.com',
+    password: 'surya@gmail.com',
+    confirmPassword: 'surya@gmail.com'
   });
 
   const [errors, setErrors] = useState({});
@@ -33,13 +33,14 @@ const User = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-
-    axios.post(`${BASE_URL}/user/register`, formData)
+    // alert('jj')
+    // const validationErrors = validate();
+    // if (Object.keys(validationErrors).length > 0) {
+    //   setErrors(validationErrors);
+    //   return;
+    // }
+    console.log(formData)
+    axios.post(`${BASE_URL}/user/login`, formData)
       .then((response) => {
         console.log('User registered successfully:', response.data);
         setMessage({ type: 'success', text: 'User registered successfully!' });

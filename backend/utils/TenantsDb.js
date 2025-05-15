@@ -8,7 +8,7 @@ const tenantConnections = {};
 const getTenantConnection = async (tenantDbName) => {
   const tenantDbUrl = process.env.tenantDbUrl;
   const dbName = tenantDbName || process.env.tenantDbName;
-
+  console.log("db name",dbName)
   if (!tenantDbUrl || !dbName) {
     throw new Error('Missing tenant DB URL or tenant DB name');
   }
@@ -24,7 +24,7 @@ const getTenantConnection = async (tenantDbName) => {
     const conn = await mongoose.createConnection(tenantDbUrl, {
       dbName,
     });
-
+    // console.log(conn)
     tenantConnections[cacheKey] = conn;
 
     return conn;

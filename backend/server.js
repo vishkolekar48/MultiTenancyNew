@@ -7,7 +7,7 @@ import { getTenantConnection } from './utils/TenantsDb.js';
 dotenv.config();
 const app = express();
 connectDB();
-getTenantConnection()
+// getTenantConnection()
 
 app.use(cors());
 app.use(express.json());

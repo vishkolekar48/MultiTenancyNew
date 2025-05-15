@@ -11,7 +11,11 @@ const LoginPage = () => {
     userName: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    mobileNo:'',
+    tenant_id:'6820a9a9ba51a7d19d1939ef',
+    restaurant_id:'68175b0a1047edc1c81c667b',
+    role_id:''
   });
 
   const [errors, setErrors] = useState({});
@@ -45,7 +49,7 @@ const LoginPage = () => {
       return;
     }
 
-    axios.post(`${BASE_URL}/user/register`, formData)
+    axios.post(`${BASE_URL}/user/registration`, formData)
       .then((response) => {
         console.log('User registered successfully:', response.data);
         toast.success('User registered successfully!');

@@ -3,12 +3,12 @@ import mongoose, { Schema } from "mongoose";
 const LoginSchema = new Schema(
   {
     userName: {type: String,required: true,unique: true,lowercase: true,},
-    email: {type: String,required: true,unique: true, lowercase: true,},
-    password: {type: String,required: true,},
-    mobileNo: {type: String,required: true,},
-    tenant_id: {type: mongoose.Schema.Types.ObjectId,ref: "Tenants",required: true,},
-    restaurant_id: {type: mongoose.Schema.Types.ObjectId,ref: "Restaurants",required: true,},
-    role_id: {type: mongoose.Schema.Types.ObjectId,ref: "Roles",required: true,},
+    email: {type: String, lowercase: true,},
+    password: {type: String,},
+    mobileNo: {type: String,},
+    tenant_id: {type: mongoose.Schema.Types.ObjectId,ref: "Tenants",},
+    restaurant_id: {type: mongoose.Schema.Types.ObjectId,ref: "Restaurants",},
+    // role_id: {type: mongoose.Schema.Types.ObjectId,ref: "Roles",},
   },
   { timestamps: true }
 );
