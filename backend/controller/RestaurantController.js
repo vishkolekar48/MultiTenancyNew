@@ -42,3 +42,36 @@ export const createRestaurant = async (req, res) => {
     });
   }
 };
+
+export const addStudent = async(req,res) =>{
+     
+  try {
+     const {
+
+      
+
+     } = req.body
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  } catch (error) {
+    
+  }
+
+
+
+
+
+}

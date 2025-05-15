@@ -10,11 +10,11 @@ const LoginSchema = new Schema(
     restaurant_id: {type: mongoose.Schema.Types.ObjectId,ref: "Restaurants",},
     // role_id: {type: mongoose.Schema.Types.ObjectId,ref: "Roles",},
   },
-  { timestamps: true }
+  { timestamps: true } 
 );
 
 const TenantsSchema = new Schema(
-  {
+  { 
     login_id: {type: mongoose.Schema.Types.ObjectId,ref: "Login",required: true,},
     restaurant_id: {type: mongoose.Schema.Types.ObjectId,ref: "Restaurants",required: true,},
     dbName: { type: String, required: true },
